@@ -1,0 +1,62 @@
+def knapsack_01(n, values, weights, W):
+    """
+    Calculates the maximum value of the items that can be placed in a knapsack of capacity W.
+
+    Args:
+        n: The number of items.
+        values: A list of the values of the items.
+        weights: A list of the weights of the items.
+        W: The capacity of the knapsack.
+
+    Returns:
+        The maximum value that can be placed in the knapsack.
+    """
+
+    # Create a dynamic programming table
+    dp = [[0] * (W + 1) for _ in range(n + 1)]
+
+    # Fill the dynamic programming table
+    for i in range(n + 1):
+        for w in range(W + 1):
+            if i == 0 or w == 0:
+                dp[i][w] = 0
+            elif weights[i - 1] <= w:
+                dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - weights[i - 1]] + values[i - 1])
+            else:
+                dp[i][w] = dp[i - 1][w]
+
+    return dp[n][W]
+
+if __name__ == "__main__":
+    n = int(input("Enter the number of items: "))
+    values = list(map(int, input("Enter the values of the items (space-separated): ").split()))
+    weights = list(map(int, input("Enter the weights of the items (space-separated): ").split()))
+    W = int(input("Enter the capacity of the knapsack: "))
+    
+    max_value = knapsack_01(n, values, weights, W)
+    
+    print("Maximum value in the knapsack:", max_value)
+
+
+'''The provided code solves the 0/1 Knapsack problem, which aims to find the maximum
+ value of items to put in a knapsack with a given weight capacity. 
+ It uses dynamic programming to create a table (dp) to store intermediate results. 
+ For each item (indexed from 1 to n) and each possible weight capacity (from 0 to W), 
+ it calculates the maximum value that can be achieved. If an item can fit in the 
+ remaining capacity, it considers the maximum value between not including the item 
+ and including it. If not, it simply inherits the value from the previous row. 
+ The final result is stored in dp[n][W], representing the maximum value that can
+   be placed in the knapsack. The code reads input for the number of items, 
+   their values, weights, and knapsack capacity, and then prints the maximum 
+   achievable value.
+'''
+
+
+'''What is 0/1 Knapsack Problem? 
+In this each item can either be taken or left behind; it cannot be taken a 
+fraction of it or multiple or it. '''
+''' What is dyanamic Programming? 
+Dynamic programming is defined as a computer programming technique where an 
+algorithmic problem is first broken down into sub-problems, the results are saved, 
+and then the sub-problems are optimized to find the overall solution — which usually
+ has to do with finding the maximum and minimum range of the algorithmic query.'''

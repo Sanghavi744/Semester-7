@@ -1,0 +1,71 @@
+class Item:
+    def __init__(self, profit, weight):
+        self.profit = profit
+        self.weight = weight
+
+def fractional_knapsack(capacity, items):
+    # Sort items by profit-to-weight ratio in descending order
+    items.sort(key=lambda x: x.profit / x.weight, reverse=True)
+    final_value = 0.0
+
+
+    for item in items:
+        if capacity >= item.weight:
+            final_value += item.profit
+            capacity -= item.weight
+        else:
+            final_value += item.profit * (capacity / item.weight)
+            break
+
+    return final_value
+
+if __name__ == "__main__":
+    n = int(input("Enter the number of items: "))
+    items = []
+
+    for i in range(n):
+        profit = int(input(f"Enter profit of item {i + 1}: "))
+        weight = int(input(f"Enter weight of item {i + 1}: "))
+        items.append(Item(profit, weight))
+
+    capacity = int(input("Enter the capacity of the knapsack: "))
+    max_value = fractional_knapsack(capacity, items)
+    print("Maximum value in the knapsack:", max_value)
+
+
+
+'''This Python code solves the fractional knapsack problem, an optimization task.
+ It defines a class called "Item" with profit and weight attributes. 
+ The "fractional_knapsack" function takes a capacity and a list of items,
+ sorts them by their profit-to-weight ratio, and iterates through them. 
+ It adds items to the knapsack based on their value-to-weight ratio,
+   taking fractions if needed, to maximize the total value. The code takes user 
+   input to define the items, their profits, weights, and the knapsack's capacity, 
+   and then calculates and prints the maximum value achievable in the knapsack. 
+   This code demonstrates how to solve the fractional knapsack problem using a 
+   simple algorithm.'''
+
+
+
+
+''' Fractional knapsack, also known as fractional knapsack problem or continuous
+knapsack problem, is a classic optimization problem in computer science and 
+mathematics. It is a variation of the traditional knapsack problem. In the fractional 
+knapsack problem, you are given a set of items, each with a weight and a value, 
+and a knapsack with a maximum weight capacity. The goal is to determine the most 
+valuable combination of items to include in the knapsack without exceeding its weight
+capacity.
+The key difference between the fractional knapsack problem and the
+0/1 knapsack problem (another common variation) is that in the fractional knapsack 
+problem, you can take a fraction of an item if it maximizes the total value. 
+In other words, you can decide to take a portion of an item rather than the whole item.
+The algorithm to solve the fractional knapsack problem typically involves sorting
+the items by their value-to-weight ratios (value per unit weight) in decreasing 
+order and then adding items to the knapsack starting with the item with the highest 
+value-to-weight ratio. You keep adding items until the knapsack is full, 
+taking fractions of items as needed. This process continues until the knapsack is 
+either completely filled or there are no more items to add.
+The fractional knapsack problem has applications in various fields, 
+including resource allocation, economics, and optimization. It is often used in
+ scenarios where you can divide items, such as cutting stock problems or 
+ financial portfolio optimization.'''
